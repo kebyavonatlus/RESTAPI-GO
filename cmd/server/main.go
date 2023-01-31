@@ -23,6 +23,11 @@ func Run() error {
 		return err
 	}
 
+	if err := db.MigrateDB(); err != nil {
+		fmt.Println("failed to migrate database")
+		return err
+	}
+
 	fmt.Println("successfully connected and pinged database")
 
 	return nil
