@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/kebyavonatlus/gorestapicourse/internal/comment"
 	db "github.com/kebyavonatlus/gorestapicourse/internal/database"
 )
 
@@ -29,6 +30,12 @@ func Run() error {
 	}
 
 	fmt.Println("successfully connected and pinged database")
+
+	commentService := comment.NewService(db)
+	fmt.Println(commentService.GetComment(
+		context.Background(),
+		"670af4c8-cf2b-448a-9aec-c15ce3b5b94e",
+	))
 
 	return nil
 }
