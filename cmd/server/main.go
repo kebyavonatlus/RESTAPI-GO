@@ -32,6 +32,18 @@ func Run() error {
 	fmt.Println("successfully connected and pinged database")
 
 	commentService := comment.NewService(db)
+
+	commentService.PostComment(
+		context.Background(),
+		comment.Comment {
+			ID: "6a2fb5ea-20ea-48ef-a0cf-e22c485c4c67",
+			Slug: "manual-test",
+			Author: "Elliot",
+			Body: "Hello world",
+		},
+	)
+
+
 	fmt.Println(commentService.GetComment(
 		context.Background(),
 		"670af4c8-cf2b-448a-9aec-c15ce3b5b94e",
