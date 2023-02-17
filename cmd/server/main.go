@@ -6,6 +6,7 @@ import (
 
 	"github.com/kebyavonatlus/gorestapicourse/internal/comment"
 	db "github.com/kebyavonatlus/gorestapicourse/internal/database"
+	transportHttp "github.com/kebyavonatlus/gorestapicourse/internal/transport/http"
 )
 
 // Run - is going to be responsible for
@@ -33,21 +34,10 @@ func Run() error {
 
 	commentService := comment.NewService(db)
 
-	commentService.PostComment(
-		context.Background(),
-		comment.Comment {
-			ID: "6a2fb5ea-20ea-48ef-a0cf-e22c485c4c67",
-			Slug: "manual-test",
-			Author: "Elliot",
-			Body: "Hello world",
-		},
-	)
-
-
-	fmt.Println(commentService.GetComment(
-		context.Background(),
-		"670af4c8-cf2b-448a-9aec-c15ce3b5b94e",
-	))
+	httpHandler := transportHttp.NewHandler(commentService)
+	if err := httpHandler.Serve(); err != nil {
+		return err
+	}
 
 	return nil
 }
